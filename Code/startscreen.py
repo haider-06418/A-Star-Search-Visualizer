@@ -1,6 +1,6 @@
 import pygame as pg
 import pygame
-# import main.py as main
+# from main import *
 
 # Setting up Visualizer window
 SCREEN_WIDTH = 900
@@ -45,34 +45,64 @@ clock = pg.time.Clock()
 pygame.font.init()
 
 def showInstructions():
-    pg.display.set_caption("A-Star Search Algorithm Visualizer")
-    MAIN_WINDOW.fill(GREY)
-    large_text = pg.font.SysFont("comicsansms", 115)
-    text_surf, text_rect = text_objects("A-Star Search Algorithm Visualizer", large_text)
-    text_rect.center = ((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2))
-    MAIN_WINDOW.blit(text_surf, text_rect)
-    button("Start", 150, 450, 100, 50, GREEN, DARK_GREEN, game_intro)
-    button("Quit", 550, 450, 100, 50, RED, DARK_RED, quitgame)
-    pg.display.update()
+    # make a new screen
+    screen = pygame.display.set_mode((900, 750))
+
+    # show image on screen
+    screen.blit(pygame.image.load("Code/Instructions_Screen.png"), (0, 0))
+
+    # show the screen
+    pygame.display.flip()
+
+    # wait for the user to press a key
+    while True:
+        event = pygame.event.wait()
+        if event.type == pygame.QUIT:
+            screen = pygame.display.set_mode((900, 750))
+            screen.blit(pygame.image.load("Code/Start_Screen.png"), (0, 0))
+            pygame.display.flip()
+        if event.type == pygame.KEYDOWN:
+            break
+
+    # return to the main screen
+    
 
 
-def button(msg, x, y, w, h, ic, ac, action=None):
+
+
+def btn(msg, x, y, w, h, ic, ac):
     mouse = pg.mouse.get_pos()
     click = pg.mouse.get_pressed()
     if x + w > mouse[0] > x and y + h > mouse[1] > y:
         pg.draw.rect(MAIN_WINDOW, ac, (x, y, w, h))
-        pass
-
-        if click[0] == 1 and action is not None:
-            action()
     else:
         pg.draw.rect(MAIN_WINDOW, ic, (x, y, w, h))
-
+    if click[0] == 1:
+        if mouse[0] > x and mouse[0] < x + w and mouse[1] > y and mouse[1] < y + h:
+            import sys
+            import main
+            sys.exit(main.main1())  
+        # pass
     small_text = pg.font.SysFont("comicsansms", 25)
     text_surf, text_rect = text_objects(msg, small_text)
-    
     text_rect.center = ((x + (w / 2)), (y + (h / 2)))
     MAIN_WINDOW.blit(text_surf, text_rect)
+
+def btn1(msg, x1, y1, w1, h1, ic1, ac1):
+    mouse1 = pg.mouse.get_pos()
+    click1 = pg.mouse.get_pressed()
+    if x1 + w1 > mouse1[0] > x1 and y1 + h1 > mouse1[1] > y1:
+        pg.draw.rect(MAIN_WINDOW, ac1, (x1, y1, w1, h1))
+    else:
+        pg.draw.rect(MAIN_WINDOW, ic1, (x1, y1, w1, h1))
+    if click1[0] == 1:
+        if mouse1[0] > x1 and mouse1[0] < x1 + w1 and mouse1[1] > y1 and mouse1[1] < y1 + h1:
+            showInstructions()
+    small_text = pg.font.SysFont("comicsansms", 25)
+    text_surf, text_rect = text_objects(msg, small_text)
+    text_rect.center = ((x1 + (w1 / 2)), (y1 + (h1 / 2)))
+    MAIN_WINDOW.blit(text_surf, text_rect)
+
 
 
 intro = True
@@ -88,60 +118,20 @@ while intro:
     text_font_2 = pg.font.Font('freesansbold.ttf', 35) 
     text_font_3 = pg.font.Font('freesansbold.ttf', 25) 
 
-    # text_surf, text_rect = text_objects("A-Star Search Algorithm Visualizer", text_font_1)
-    # text_rect.center = ((window_size[0] / 2), (window_size[1] / 4))
-    # text_rect.center = ((window_size[0] // 2), (window_size[1] // 2))
-    # MAIN_WINDOW.blit(text_surf, text_rect)
-    
-
-    # # create a rectangular object for the
-    # # text surface object
-    # textRect = text.get_rect()
-
-    # # set the center of the rectangular object.
-    # textRect.center = (X // 2, Y // 2)
-
-    # display_surface.blit(text, textRect)
-
-    # here
-    # text_surf_2, text_rect_2 = text_objects("CS 351: Artificial Intelligence", text_font_2)
-    # text_rect_2.center = ((window_size[0] - 300)// 2, (window_size[1] - 300) // 2)
-    # MAIN_WINDOW.blit(text_surf_2, text_rect_2)
-
-    # text_surf_3, text_rect_3 = text_objects("Fall 2022", text_font_2)
-    # text_rect_3.center = ((window_size[0] / 2), (window_size[1] / 4))
-    # MAIN_WINDOW.blit(text_surf_3, text_rect_3)
-
-    # text_surf_4, text_rect_4 = text_objects("Semester Project", text_font_2)
-    # text_rect_4.center = ((window_size[0] / 2), (window_size[1] / 4))
-    # MAIN_WINDOW.blit(text_surf_4, text_rect_4)
-
-    # # A* Search Algorithm Visualization done in lines 63-66
-
-    # text_surf_5, text_rect_5 = text_objects("Group Members:", text_font_2)
-    # text_rect_5.center = ((window_size[0] / 2), (window_size[1] / 4))
-    # MAIN_WINDOW.blit(text_surf_5, text_rect_5)
-
-    # text_surf_6, text_rect_6 = text_objects("Mohammed Haider Abbas, Asad Raza, Ali Zain Sardar", text_font_2)
-    # text_rect_6.center = ((window_size[0] / 2), (window_size[1] / 4))
-    # MAIN_WINDOW.blit(text_surf_6, text_rect_6)
-    # # till here
-
-
     
     # show image on screen
     MAIN_WINDOW.blit(pygame.image.load("Code/img.png"), ((0), (0)))
 
-    # button("GO!", (window_size[0] - 100) / 2, window_size[1] / 2,
+    # btn("GO!", (window_size[0] - 100) / 2, window_size[1] / 2,
     #             100, 50, BLUE, GREEN, 'nextscreen')
 
-    # make a button with no hover color
-    button("GO!", (window_size[0] - 100) / 2, window_size[1] / 2+30,
-                        100, 50, WHITE, WHITE, 'nextscreen')
+    # make a btn with no hover color
+    btn("GO!", (window_size[0] - 100) / 2, window_size[1] / 2+30, 100, 50, WHITE, WHITE)
+    # make an instructions btn which will be used to show instructions
+    btn1("INSTRIUCTIONS!", (window_size[0] - 100) / 2 - 100, window_size[1] / 2+100, 300, 50, WHITE, WHITE)
 
-    # make an instructions button which will be used to show instructions
-    button("INSTRIUCTIONS!", (window_size[0] - 100) / 2 - 100, window_size[1] / 2+100,
-                        300, 50, WHITE, WHITE, "showInstructions()")
+
+
     
 
 

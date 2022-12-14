@@ -27,7 +27,7 @@ class Node:
         self.col = col
         self.x = row * width
         self.y = col * width
-        self.color = WHITE
+        self.color = BLACK
         self.neighbours = []
         self.width = width
         self.totalRows = totalRows
@@ -36,13 +36,13 @@ class Node:
         return self.row, self.col
 
     def isClosed(self):
-        return self.color == RED
+        return self.color == TURQUOISE
 
     def isOpen(self):
         return self.color == BLUE
 
     def isObstacle(self):
-        return self.color == BLACK
+        return self.color == WHITE
 
     def isStart(self):
         return self.color == GREEN
@@ -54,22 +54,22 @@ class Node:
         self.color = WHITE
 
     def MakeStart(self):
-        self.color = GREEN
+        self.color = RED
 
     def MakeClosed(self):
-        self.color = RED
+        self.color = TURQUOISE
 
     def MakeOpen(self):
         self.color = BLUE
 
     def MakeBarrier(self):
-        self.color = BLACK
+        self.color = WHITE
 
     def MakeEnd(self):
-        self.color = ORANGE
+        self.color = YELLOW
 
     def MakePath(self):
-        self.color = PURPLE
+        self.color = GREEN
 
     def draw(self, MAIN_WINDOW):
         pg.draw.rect(MAIN_WINDOW, self.color, (self.x, self.y, self.width, self.width))
@@ -112,9 +112,9 @@ def MakeGrid(rows, width):
 def DrawGrid(MAIN_WINDOW, rows, width):
     gap = width // rows
     for i in range(rows):
-        pg.draw.line(MAIN_WINDOW, BLACK, (0, i * gap), (width, i * gap))
+        pg.draw.line(MAIN_WINDOW, WHITE, (0, i * gap), (width, i * gap))
         for j in range(rows):
-            pg.draw.line(MAIN_WINDOW, BLACK, (j * gap, 0), (j * gap, width))
+            pg.draw.line(MAIN_WINDOW, WHITE, (j * gap, 0), (j * gap, width))
 
 
 def Draw(MAIN_WINDOW, rows, grid, width):
@@ -189,6 +189,13 @@ def Astar_algorithm(draw, grid, start, end):
             if event.type == pg.QUIT:
                 pg.QUIT()
 
+        # if esc is pressed
+        keys = pg.key.get_pressed()
+        if keys[pg.K_ESCAPE]:
+            # run startscreen.py using system
+            import os
+            os.system('startscreen.py')
+
         current_node = Open_Set.get()[2]
         Open_Set_check.remove(current_node)
 
@@ -234,6 +241,8 @@ def main1(MAIN_WINDOW, width):
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 run_algo = False
+                import os
+                os.system('startscreen.py')
 
             if pg.mouse.get_pressed()[0]:
                 mouse_pos = pg.mouse.get_pos()
@@ -268,11 +277,17 @@ def main1(MAIN_WINDOW, width):
                         Astar_algorithm(lambda: Draw(MAIN_WINDOW, ROWS, grid, width), grid, start, end)
                     # bfs(lambda: Draw(MAIN_WINDOW, ROWS, grid, width), grid, start, end)
 
-                if event.key == pg.K_c:
+                if event.key == pg.K_r:
                     start = None
                     end = None
                     grid = MakeGrid(ROWS, width)
+
+
     pg.quit()
 
 
 main1(MAIN_WINDOW, SCREEN_WIDTH)
+
+
+if __name__ == '__main__':
+    main1(MAIN_WINDOW, SCREEN_WIDTH)
