@@ -1,24 +1,18 @@
 import pygame as pg
-import pygame
 from constants import *
 from helperFunctions import *
 
-
-# Setting up Visualizer window
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 750
 MAIN_WINDOW = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pg.display.set_caption("A-Star Search Algorithm Visualizer")
+window_size = [SCREEN_WIDTH, SCREEN_HEIGHT]
+clock = pg.time.Clock()
+pygame.font.init()
 
 def text_objects(text, font):
         text_surface = font.render(text, True, BLACK)
         return text_surface, text_surface.get_rect()
-
-window_size = [SCREEN_WIDTH, SCREEN_HEIGHT]
-clock = pg.time.Clock()
-# pygame.init()
-pygame.font.init()
-
 
 def btn(msg, x, y, w, h, ic, ac):
     mouse = pg.mouse.get_pos()
@@ -62,14 +56,9 @@ while intro:
             quit()
 
     MAIN_WINDOW.fill(WHITE)
-
-    # show image on screen
     MAIN_WINDOW.blit(pygame.image.load("Code/Main_Screen.png"), ((0), (0)))
-
-    # make a btn with no hover color
     btn("GO!", (window_size[0] - 100) / 2, window_size[1] / 2+30, 100, 50, WHITE, WHITE)
-    # make an instructions btn which will be used to show instructions
     btn1("INSTRUCTIONS!", (window_size[0] - 100) / 2 - 100, window_size[1] / 2+100, 300, 50, WHITE, WHITE)
 
     pg.display.update()
-    clock.tick(15) 
+    clock.tick(15)

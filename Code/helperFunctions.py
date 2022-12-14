@@ -2,19 +2,13 @@ import pygame
 from constants import *
 from queue import PriorityQueue
 import pygame as pg
+import os
 from nodefile import Node
 
 def showInstructions():
-    # make a new screen
     screen = pygame.display.set_mode((900, 750))
-
-    # show image on screen
     screen.blit(pygame.image.load("Code/Instructions_Screen.png"), (0, 0))
-
-    # show the screen
     pygame.display.flip()
-
-    # wait for the user to press a key
     while True:
         event = pygame.event.wait()
         if event.type == pygame.QUIT:
@@ -29,7 +23,7 @@ def h(node1, node2):
     x2, y2 = node2
     return abs(x1 - x2) + abs(y1 - y2)
 
-def MakeGrid(rows, width):
+def GridCreation(rows, width):
     grid = []
     gap = width // rows
     for i in range(rows):
@@ -39,34 +33,34 @@ def MakeGrid(rows, width):
             grid[i].append(node)
     return grid
 
-def DrawGrid(MAIN_WINDOW, rows, width):
+def GridDrawing(MAIN_WINDOW, rows, width):
     gap = width // rows
     for i in range(rows):
-        pg.draw.line(MAIN_WINDOW, WHITE, (0, i * gap), (width, i * gap))
+        pg.draw.line(MAIN_WINDOW, GREY, (0, i * gap), (width, i * gap))
         for j in range(rows):
-            pg.draw.line(MAIN_WINDOW, WHITE, (j * gap, 0), (j * gap, width))
+            pg.draw.line(MAIN_WINDOW, GREY, (j * gap, 0), (j * gap, width))
 
-def Draw(MAIN_WINDOW, rows, grid, width):
+def Create(MAIN_WINDOW, rows, grid, width):
     MAIN_WINDOW.fill(WHITE)
-    for row in grid:
-        for Node in row:
-            Node.draw(MAIN_WINDOW)
-    DrawGrid(MAIN_WINDOW, rows, width)
+    for i in range(rows):
+        for j in range(rows):
+            grid[i][j].draw(MAIN_WINDOW)
+    GridDrawing(MAIN_WINDOW, rows, width)
     pg.display.update()
 
-def Mouse_coordinates(pos, rows, width):
+def getMouseXY(pos, rows, width):
     gap = width // rows
     y, x = pos
     return y // gap, x // gap
 
-def CreatePath(parent, end, draw):
+def pathMaking(parent, end, draw):
     while end in parent:
         end = parent[end]
         end.MakePath()
         draw()
     end.MakeStart()
 
-def Astar_algorithm(draw, grid, start, end):
+def a_str_algo(draw, grid, start, end):
     count = 0
     parent = {}
     Open_Set = PriorityQueue()
@@ -76,25 +70,21 @@ def Astar_algorithm(draw, grid, start, end):
     f_score = {val: float("inf") for row in grid for val in row}
     f_score[start] = 0 + h(start.getPos(), end.getPos())
 
-    Open_Set_check = {start}  # this is to check if a node is in the Priority Queue or not
+    Open_Set_check = {start}  
 
     while not Open_Set.empty():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 pg.QUIT()
-
-        # if esc is pressed
         keys = pg.key.get_pressed()
         if keys[pg.K_ESCAPE]:
-            # run startscreen.py using system
-            import os
             os.system('startscreen.py')
 
         current_node = Open_Set.get()[2]
         Open_Set_check.remove(current_node)
 
         if current_node == end:
-            CreatePath(parent, end, draw)
+            pathMaking(parent, end, draw)
             end.MakeEnd()
             return True
 

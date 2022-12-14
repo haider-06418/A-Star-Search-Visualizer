@@ -1,10 +1,6 @@
 import pygame as pg
-import pygame
 from constants import *
 from helperFunctions import *
-
-
-
 
 class Node:
     def __init__(self, row, col, width, totalRows):

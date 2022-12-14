@@ -1,42 +1,30 @@
 import pygame as pg
-from queue import PriorityQueue
 from constants import *
 from helperFunctions import *
-from nodefile import Node
 
-
-# Setting up Visualizer window
-SCREEN_WIDTH = 900
-SCREEN_HEIGHT = 750
 MAIN_WINDOW = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pg.display.set_caption("A-Star Search Algorithm Visualizer")
 
-
-
 def main1(MAIN_WINDOW, width):
     ROWS = 50
-    grid = MakeGrid(ROWS, width)
-
+    grid = GridCreation(ROWS, width)
     start = None
     end = None
+    keepRunning = True
 
-    run_algo = True
-    done = 0
-
-    while run_algo:
-        Draw(MAIN_WINDOW, ROWS, grid, width)
-
-        for event in pg.event.get():
+    while keepRunning:
+        Create(MAIN_WINDOW, ROWS, grid, width)
+        tmp = pg.event.get()
+        for event in tmp:
             if event.type == pg.QUIT:
-                run_algo = False
+                keepRunning = False
                 import os
                 os.system('startscreen.py')
 
             if pg.mouse.get_pressed()[0]:
                 mouse_pos = pg.mouse.get_pos()
-                r, c = Mouse_coordinates(mouse_pos, ROWS, width)
+                r, c = getMouseXY(mouse_pos, ROWS, width)
                 cell = grid[r][c]
-
                 if not start and cell != end:
                     start = cell
                     start.MakeStart()
@@ -48,7 +36,7 @@ def main1(MAIN_WINDOW, width):
 
             elif pg.mouse.get_pressed()[2]:
                 mouse_pos = pg.mouse.get_pos()
-                r, c = Mouse_coordinates(mouse_pos, ROWS, width)
+                r, c = getMouseXY(mouse_pos, ROWS, width)
                 cell = grid[r][c]
                 cell.reset()
                 if cell == start:
@@ -59,15 +47,14 @@ def main1(MAIN_WINDOW, width):
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_SPACE:
                     if start and end:
-                        for row in grid:
-                            for Node in row:
-                                Node.UpdateNeighbours(grid)
-                        Astar_algorithm(lambda: Draw(MAIN_WINDOW, ROWS, grid, width), grid, start, end)
-                    # bfs(lambda: Draw(MAIN_WINDOW, ROWS, grid, width), grid, start, end)
+                        for i in range(ROWS):
+                            for j in range(ROWS):
+                                grid[i][j].UpdateNeighbours(grid)
+                        a_str_algo(lambda: Create(MAIN_WINDOW, ROWS, grid, width), grid, start, end)
                 if event.key == pg.K_r:
                     start = None
                     end = None
-                    grid = MakeGrid(ROWS, width)
+                    grid = GridCreation(ROWS, width)
     pg.quit()
 
 main1(MAIN_WINDOW, SCREEN_WIDTH)
