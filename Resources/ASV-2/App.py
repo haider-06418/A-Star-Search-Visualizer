@@ -3,7 +3,6 @@ from AStarSearch import *
 from Settings import *
 from Grid import Grid
 
-
 class App:
     def __init__(self):
         self.start = None
