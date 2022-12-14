@@ -218,7 +218,7 @@ def Astar_algorithm(draw, grid, start, end):
     return False
 
 
-def main(MAIN_WINDOW, width):
+def main1(MAIN_WINDOW, width):
     ROWS = 50
     grid = MakeGrid(ROWS, width)
 
@@ -272,8 +272,7 @@ def main(MAIN_WINDOW, width):
                     start = None
                     end = None
                     grid = MakeGrid(ROWS, width)
-
     pg.quit()
 
 
-main(MAIN_WINDOW, SCREEN_WIDTH)
+main1(MAIN_WINDOW, SCREEN_WIDTH)
