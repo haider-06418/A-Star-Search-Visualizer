@@ -128,7 +128,7 @@ while intro:
     # make a btn with no hover color
     btn("GO!", (window_size[0] - 100) / 2, window_size[1] / 2+30, 100, 50, WHITE, WHITE)
     # make an instructions btn which will be used to show instructions
-    btn1("INSTRIUCTIONS!", (window_size[0] - 100) / 2 - 100, window_size[1] / 2+100, 300, 50, WHITE, WHITE)
+    btn1("INSTRUCTIONS!", (window_size[0] - 100) / 2 - 100, window_size[1] / 2+100, 300, 50, WHITE, WHITE)
 
 
 

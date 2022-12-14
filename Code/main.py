@@ -91,12 +91,10 @@ class Node:
     def __lt__(self, other):
         return False
 
-
 def h(node1, node2):
     x1, y1 = node1
     x2, y2 = node2
     return abs(x1 - x2) + abs(y1 - y2)
-
 
 def MakeGrid(rows, width):
     grid = []
@@ -108,7 +106,6 @@ def MakeGrid(rows, width):
             grid[i].append(node)
     return grid
 
-
 def DrawGrid(MAIN_WINDOW, rows, width):
     gap = width // rows
     for i in range(rows):
@@ -119,7 +116,6 @@ def DrawGrid(MAIN_WINDOW, rows, width):
 
 def Draw(MAIN_WINDOW, rows, grid, width):
     MAIN_WINDOW.fill(WHITE)
-
     for row in grid:
         for Node in row:
             Node.draw(MAIN_WINDOW)
@@ -139,38 +135,6 @@ def CreatePath(parent, end, draw):
         end.MakePath()
         draw()
     end.MakeStart()
-
-
-# # Optional implementation by bfs
-# def bfs(draw, grid, start, end):
-#     q = queue.Queue()
-#     parent = {}
-#     q.put(start)
-#     done = {start}
-
-#     while not q.empty():
-#         for event in pg.event.get():
-#             if event.type == pg.QUIT:
-#                 pg.quit()
-
-#         current = q.get()
-
-#         if current == end:
-#             CreatePath(parent, end, draw)
-#             end.MakeEnd()
-#             return True
-
-#         for neighbour in current.neighbours:
-#             if neighbour not in done:
-#                 done.add(neighbour)
-#                 parent[neighbour] = current
-#                 q.put(neighbour)
-#         draw()
-
-#         if current != start:
-#             current.MakeClosed()
-#     return False
-
 
 def Astar_algorithm(draw, grid, start, end):
     count = 0
