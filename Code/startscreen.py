@@ -11,8 +11,9 @@ clock = pg.time.Clock()
 pygame.font.init()
 
 def text_objects(text, font):
-        text_surface = font.render(text, True, BLACK)
-        return text_surface, text_surface.get_rect()
+    text_surface = font.render(text, True, BLACK)
+    text_rect = text_surface.get_rect()
+    return text_surface, text_rect
 
 def btn(msg, x, y, w, h, ic, ac):
     mouse = pg.mouse.get_pos()

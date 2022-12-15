@@ -1,4 +1,4 @@
-# Colors to be used in project
+# Defining RGB color values for the colors used
 BLACK = (0, 0, 0)
 PURPLE = (128, 0, 128)
 SKY_BLUE = (102, 204, 255)
@@ -16,6 +16,6 @@ TURQUOISE = (64, 224, 208)
 GREEN = (0, 255, 0)
 WHITE = (255, 255, 255)
 
-# Screen dimensions
+# Defining Screen dimensions
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 750

@@ -10,16 +10,14 @@ def main_func(MAIN_WINDOW, width):
     grid = GridCreation(ROWS, width)
     start = None
     end = None
-    keepRunning = True
 
-    while keepRunning:
+    while True:
         Create(MAIN_WINDOW, ROWS, grid, width)
-        tmp = pg.event.get()
-        for event in tmp:
+        for event in pg.event.get():
             if event.type == pg.QUIT:
-                keepRunning = False
                 import os
                 os.system('startscreen.py')
+                return
 
             if pg.mouse.get_pressed()[0]:
                 mouse_pos = pg.mouse.get_pos()
@@ -55,7 +53,6 @@ def main_func(MAIN_WINDOW, width):
                     start = None
                     end = None
                     grid = GridCreation(ROWS, width)
-    pg.quit()
 
 main_func(MAIN_WINDOW, SCREEN_WIDTH)
 if __name__ == '__main__':

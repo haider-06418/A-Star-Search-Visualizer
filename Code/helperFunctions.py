@@ -5,17 +5,17 @@ import pygame as pg
 import os
 from nodefile import Node
 
+
 def showInstructions():
     screen = pygame.display.set_mode((900, 750))
     screen.blit(pygame.image.load("Code/Instructions_Screen.png"), (0, 0))
     pygame.display.flip()
     while True:
         event = pygame.event.wait()
-        if event.type == pygame.QUIT:
+        if event.type == pygame.QUIT or event.type == pygame.KEYDOWN:
             screen = pygame.display.set_mode((900, 750))
             screen.blit(pygame.image.load("Code/Start_Screen.png"), (0, 0))
             pygame.display.flip()
-        if event.type == pygame.KEYDOWN:
             break
 
 def nodes(node1, node2):
