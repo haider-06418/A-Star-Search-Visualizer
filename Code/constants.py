@@ -15,9 +15,7 @@ RED = (255, 0, 0)
 TURQUOISE = (64, 224, 208)
 GREEN = (0, 255, 0)
 WHITE = (255, 255, 255)
-# Directions
-LEFT = 1
-RIGHT = 3
+
 # Screen dimensions
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 750

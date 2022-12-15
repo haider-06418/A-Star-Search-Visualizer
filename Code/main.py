@@ -5,7 +5,7 @@ from helperFunctions import *
 MAIN_WINDOW = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pg.display.set_caption("A-Star Search Algorithm Visualizer")
 
-def main1(MAIN_WINDOW, width):
+def main_func(MAIN_WINDOW, width):
     ROWS = 50
     grid = GridCreation(ROWS, width)
     start = None
@@ -50,13 +50,13 @@ def main1(MAIN_WINDOW, width):
                         for i in range(ROWS):
                             for j in range(ROWS):
                                 grid[i][j].UpdateNeighbours(grid)
-                        a_str_algo(lambda: Create(MAIN_WINDOW, ROWS, grid, width), grid, start, end)
+                        a_star_algo(lambda: Create(MAIN_WINDOW, ROWS, grid, width), grid, start, end)
                 if event.key == pg.K_r:
                     start = None
                     end = None
                     grid = GridCreation(ROWS, width)
     pg.quit()
 
-main1(MAIN_WINDOW, SCREEN_WIDTH)
+main_func(MAIN_WINDOW, SCREEN_WIDTH)
 if __name__ == '__main__':
-    main1(MAIN_WINDOW, SCREEN_WIDTH)
+    main_func(MAIN_WINDOW, SCREEN_WIDTH)

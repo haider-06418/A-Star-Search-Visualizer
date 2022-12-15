@@ -14,7 +14,7 @@ class Node:
         self.totalRows = totalRows
 
     def getPos(self):
-        return self.row, self.col
+        return self.row, self.col        
 
     def isClosed(self):
         return self.color == TURQUOISE
@@ -68,7 +68,3 @@ class Node:
 
         if self.col > 0 and not grid[self.row][self.col - 1].isObstacle():  # LEFT
             self.neighbours.append(grid[self.row][self.col - 1])
-
-    def __lt__(self, other):
-        return False
-

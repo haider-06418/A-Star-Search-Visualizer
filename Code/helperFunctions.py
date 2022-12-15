@@ -18,7 +18,7 @@ def showInstructions():
         if event.type == pygame.KEYDOWN:
             break
 
-def h(node1, node2):
+def nodes(node1, node2):
     x1, y1 = node1
     x2, y2 = node2
     return abs(x1 - x2) + abs(y1 - y2)
@@ -50,8 +50,9 @@ def Create(MAIN_WINDOW, rows, grid, width):
 
 def getMouseXY(pos, rows, width):
     gap = width // rows
-    y, x = pos
-    return y // gap, x // gap
+    row = pos[0] // gap
+    col = pos[1] // gap
+    return row, col
 
 def pathMaking(parent, end, draw):
     while end in parent:
@@ -60,19 +61,19 @@ def pathMaking(parent, end, draw):
         draw()
     end.MakeStart()
 
-def a_str_algo(draw, grid, start, end):
+def a_star_algo(draw, grid, start, end):
     count = 0
     parent = {}
-    Open_Set = PriorityQueue()
-    Open_Set.put((0, count, start))
-    g_score = {val: float("inf") for row in grid for val in row}
-    g_score[start] = 0
-    f_score = {val: float("inf") for row in grid for val in row}
-    f_score[start] = 0 + h(start.getPos(), end.getPos())
+    collection_set = PriorityQueue()
+    collection_set.put((0, count, start))
+    goal_count = {val: float("inf") for row in grid for val in row}
+    goal_count[start] = 0
+    find_count = {val: float("inf") for row in grid for val in row}
+    find_count[start] = 0 + nodes(start.getPos(), end.getPos())
 
-    Open_Set_check = {start}  
+    collec_set_check = {start}  
 
-    while not Open_Set.empty():
+    while not collection_set.empty():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 pg.QUIT()
@@ -80,8 +81,8 @@ def a_str_algo(draw, grid, start, end):
         if keys[pg.K_ESCAPE]:
             os.system('startscreen.py')
 
-        current_node = Open_Set.get()[2]
-        Open_Set_check.remove(current_node)
+        current_node = collection_set.get()[2]
+        collec_set_check.remove(current_node)
 
         if current_node == end:
             pathMaking(parent, end, draw)
@@ -89,17 +90,17 @@ def a_str_algo(draw, grid, start, end):
             return True
 
         for neighbor in current_node.neighbours:
-            g_score_neighbor = g_score[current_node] + 1
+            g_score_neighbor = goal_count[current_node] + 1
 
-            if g_score_neighbor < g_score[neighbor]:
+            if g_score_neighbor < goal_count[neighbor]:
                 parent[neighbor] = current_node
-                g_score[neighbor] = g_score_neighbor
-                f_score[neighbor] = g_score_neighbor + h(neighbor.getPos(), end.getPos())
+                goal_count[neighbor] = g_score_neighbor
+                find_count[neighbor] = g_score_neighbor + nodes(neighbor.getPos(), end.getPos())
 
-                if neighbor not in Open_Set_check:
+                if neighbor not in collec_set_check:
                     count += 1
-                    Open_Set.put((f_score[neighbor], count, neighbor))
-                    Open_Set_check.add(neighbor)
+                    collection_set.put((find_count[neighbor], count, neighbor))
+                    collec_set_check.add(neighbor)
                     neighbor.MakeOpen()
         draw()
         pg.time.delay(10)
