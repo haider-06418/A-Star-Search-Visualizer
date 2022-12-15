@@ -25,7 +25,7 @@ def btn(msg, x, y, w, h, ic, ac):
         if mouse[0] > x and mouse[0] < x + w and mouse[1] > y and mouse[1] < y + h:
             import sys
             import main
-            sys.exit(main.main1())  
+            sys.exit(main.main1(MAIN_WINDOW, SCREEN_WIDTH))  
         # pass
     small_text = pg.font.SysFont("comicsansms", 25)
     text_surf, text_rect = text_objects(msg, small_text)
